@@ -3,7 +3,7 @@ package ru.itis.shop.user.infrastructure.persistence.jdbc;
 import ru.itis.shop.infrastructure.persistence.jdbc.RowMapper;
 import ru.itis.shop.user.domain.User;
 import ru.itis.shop.user.repository.UserRepository;
-
+import java.sql.PreparedStatement;
 import javax.sql.ConnectionEvent;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -63,19 +63,21 @@ public class UserRepositoryJdbcImpl implements UserRepository {
     }
 
     @Override
-    public List<User> findAllByProfileDescriotion(String currentProfileDescroption) {
+    public List<User> findAllByProfileDescription(String profileDescription) {
         List<User> users = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            try (Statement statement = connection.createStatement()) {
-                try (ResultSet resultSet = statement.executeQuery("select * from account where profileDescription = '" + currentProfileDescroption + "'")) {
+            String sql = "select * from account where profileDescription = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, profileDescription);
+                try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         users.add(userRowMapper.mapRow(resultSet));
                     }
-                    return users;
                 }
             }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
+        return users;
     }
 }
