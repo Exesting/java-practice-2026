@@ -29,8 +29,8 @@ public class UserConsoleOperations {
                 signIn();
             }
             break;
-            case "4": {
-                findAllByProfileDescription();
+            case "3": {
+                findByProfileDescription();
             }
             break;
             case "0": {
@@ -42,17 +42,14 @@ public class UserConsoleOperations {
     private static void printUserMenu() {
         System.out.println("1. Регистрация пользователя");
         System.out.println("2. Вход в систему");
-        System.out.println("3. Найти пользователя по id");
-        System.out.println("4. Показать информацию о пользователях с заданным profileDescription");
+        System.out.println("3. Найти пользователей по описанию профиля");
         System.out.println("0. Выход");
     }
 
-    private void findAllByProfileDescription() {
-        System.out.println("Введите ProfileDescription:");
-        String currentProfileDescription = scanner.nextLine();
-        for (User user : userService.findAllByProfileDescription(currentProfileDescription)) {
-            System.out.println(user.toString());
-        }
+    private void findByProfileDescription() {
+        System.out.print("Введите описание профиля: ");
+        String profileDescription = scanner.nextLine();
+        System.out.println(userService.findAllByProfileDescription(profileDescription));
     }
 
     private void signUp() {
@@ -76,7 +73,6 @@ public class UserConsoleOperations {
         String email = scanner.nextLine();
         System.out.println("Введите password:");
         String password = scanner.nextLine();
-
         if (userService.signIn(email, password)) {
             System.out.println("Вы вошли в приложение");
         } else {
