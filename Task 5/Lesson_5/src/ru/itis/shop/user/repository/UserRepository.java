@@ -15,5 +15,5 @@ public interface UserRepository {
 
     List<User> findAll();
 
-    List<User> findAllByProfileDescriotion(String currentProfileDescription);
+    List<User> findAllByProfileDescription(String profileDescription);
 }
