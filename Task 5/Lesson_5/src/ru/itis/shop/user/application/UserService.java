@@ -27,7 +27,7 @@ public class UserService {
         } else return false;
     }
 
-    public List<User> findAllByProfileDescription(String currentProfileDescription) {
-        return userRepository.findAllByProfileDescriotion(currentProfileDescription);
+    public List<User> findAllByProfileDescription(String profileDescription) {
+        return userRepository.findAllByProfileDescription(profileDescription);
     }
 }
